@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title_block %} Login {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="wrap ">
+	<div class="card shadow mb-3">
+		<div class="card-body">
+			<h2>Update Your Information</h2>
+            {% if user.user_info.profile_pic %}
+            <img src="/media/{{user.user_info.profile_pic}}" alt="" width="120px">
+            {% endif %}
+            <form action="" method="post">
+                {{ form_1|crispy }}
+                {{ form_2|crispy }}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success btn-sm btn-block">Update</button>
+            </form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

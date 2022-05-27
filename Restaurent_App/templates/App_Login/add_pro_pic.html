@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title_block %} Change Picture {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="wrap shadow">
+	<div class="card">
+		<div class="card-body">
+			<h2>Upload Your Picture</h2>
+            {% if user.user_info.profile_pic %}
+            <img src="/media/{{user.user_info.profile_pic}}" alt="" width="120px">
+            {% endif %}
+			<form action="" method="POST" enctype="multipart/form-data">
+                {{ form|crispy }}
+                {% csrf_token %}
+				<div class="form-group">
+					<input class="btn btn-primary" type="submit" value="Upload">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

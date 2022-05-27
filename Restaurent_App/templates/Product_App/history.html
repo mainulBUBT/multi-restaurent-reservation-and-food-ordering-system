@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="wrap-table">
+                <div class="col-12">
+                    {% if messages %}
+        
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        {{message}}
+                    </div>
+                    {% endfor %}
+        
+                    {% endif %}
+                </div>
+                <div class="card shadow mb-5">
+                    <div class="card-body">
+                        <h2>Past Restaurents</h2>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Image</th>
+                                    <th>Restaurent Name</th>
+                                    <th>Items</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Invoice</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td><img src="/media/{{order.restaurents.restaurent_pics}}" alt=""></td>
+                                    <td>{{order.restaurents.name}}</td>
+                                    <td>
+                                        {% for history in histories %}
+                                            {% if history.order_id == order.id %}
+                                            {{history.product_name}},
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td> <div class="badge badge-success text-center">Completed</div></td>
+                                    <td>{{order.date}}</td>
+                                    <td><a href="/product/pdf/{{order.id}}" class="btn btn-danger" target="_blank">Download</a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Development Area</title>
+	<!-- ALL CSS FILES  -->
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand navbar-dark bg-dark">
+		<a class="navbar-brand font-weight-bold" href="{% url 'index' %}">RESTORO</a>
+		<ul class="nav navbar-nav ml-auto">
+			<li class="nav-item active">
+				<a class="nav-link" href="{% url 'index' %}">Home</a>
+			</li>
+			{% if user.is_authenticated %}
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'Product_App:ur_reserve' %}">Reservation</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'Product_App:histories' %}">History</a>
+			</li>
+			<div class="nav-item dropdown">
+				<a href="" class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">
+					@{{user.username}}
+				</a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="{% url 'App_Login:profile' %}">Your Profile</a>
+					<hr>
+					<a class="dropdown-item" href="{% url 'App_Login:logout' %}">Logout</a>
+				</div>
+			</div>
+			<li class="nav-item pt-2">
+				<a href="" class="text-decoration-none text-white"> Cart <span class="badge badge-warning">{{request.session.cart|length}}</span></a>
+			</li>
+			{% else %}
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'App_Login:login' %}">Login</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'App_Login:register' %}">Registration</a>
+			</li>
+			{% endif %}
+		</ul>
+	</nav>
+
+	{% block content %}
+
+	{% endblock %}
+
+
+	<!-- JS FILES  -->
+	<script src="{% static 'assets/js/jquery-3.4.1.min.js' %}"></script>
+	<script src="{% static 'assets/js/popper.min.js' %}"></script>
+	<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'assets/js/custom.js ' %}"></script>
+</body>
+
+</html>

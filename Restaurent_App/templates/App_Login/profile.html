@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+<div class="wrap">
+
+    <div class="card shadow">
+        <div class="card-body">
+            {% if messages %}
+
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                {{message}}
+            </div>
+            {% endfor %}
+
+            {% endif %}
+            {% if user.user_info %}
+            <div class="profile">
+                <img src="/media/{{user.user_info.profile_pic}}" class="rounded-circle" width="120px">
+                <a href="{% url 'App_Login:change_pro_pic' %}" class="btn btn-primary btn-sm">Update Picture</a>
+            </div>
+            <br>
+            {% else %}
+            <div class="profile">
+                <img src="/media/profile_pics/default_profile.png" class="rounded-circle" width="120px">
+                <a href="{% url 'App_Login:upload_pic' %}" class="btn btn-primary btn-sm text-center">Change Picture</a>
+            </div>
+            {% endif %}
+            <table class="table table-border">
+                <tr>
+                    <td>Username</td>
+                    <td>{{user.username}}</td>
+                </tr>
+                <tr>
+                    <td>User Email</td>
+                    <td>{{user.email}}</td>
+                </tr>
+                <tr>
+                    <td>Cell Number</td>
+                    <td>{{user.user_info.cell}}</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>{{user.user_info.address}}</td>
+                </tr>
+            </table>
+            <a href="{% url 'App_Login:user_change' %}" class="btn btn-warning btn-sm">Update Your Profile</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}

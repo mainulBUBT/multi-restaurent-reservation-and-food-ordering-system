@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="wrap shadow">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="text-center">Reserve a Table</h2>
+    
+            {% for data in restaurent %}
+           
+               <div class="text-center">
+                <img src="/media/{{data.restaurent_pics}}" alt="" style="width: 80px; margin: auto;">
+                <h1>{{data.name}}</h1>
+               </div>
+                
+      
+            {% endfor %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                
+                {{ form|crispy }}
+                <div class="form-group">
+                    <input class="btn btn-primary" type="submit" value="Request for reserve">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

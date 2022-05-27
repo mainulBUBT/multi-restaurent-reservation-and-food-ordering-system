@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-12">
+            {% if messages %}
+
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                {% if cart %}
+                {{message}}
+                <form action="{% url 'Product_App:check_cart' restaur %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" name="reset" value="reset">Reset Cart</button>
+                </form>
+                {% else %}
+
+                {{message}}
+                
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            {% endif %}
+        </div>
+        {% for data in table %}
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="/media/{{data.image}}" alt="Card image cap"
+                    style="width:18rem; height:15rem">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{data.name}}</h5>
+                        {% if status == 'Accepted' and user == request.user %}
+                        <a href="{% url 'Product_App:check_cart' data.id %}" class="btn btn-primary btn-block">Add to cart</a>
+                        {% else %}
+                        <table class="table table-borderless text-center">
+                            <tr>
+                                <td>Price</td>
+                                <td>{{data.price}}</td>
+                            </tr>
+                        </table>
+                        {%endif%}
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
